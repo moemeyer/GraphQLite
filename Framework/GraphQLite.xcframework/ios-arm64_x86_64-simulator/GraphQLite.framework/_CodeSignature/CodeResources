@@ -26,7 +26,7 @@
 		</data>
 		<key>Modules/GraphQLite.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		fPBUfDFMLgDIvdDKamlomzPp4zk=
+		WaBkDCFKC9oGBX5mZtUCwm7UfeI=
 		</data>
 		<key>Modules/GraphQLite.swiftmodule/arm64.swiftdoc</key>
 		<data>
@@ -38,7 +38,7 @@
 		</data>
 		<key>Modules/GraphQLite.swiftmodule/arm64.swiftmodule</key>
 		<data>
-		fPBUfDFMLgDIvdDKamlomzPp4zk=
+		WaBkDCFKC9oGBX5mZtUCwm7UfeI=
 		</data>
 		<key>Modules/GraphQLite.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
@@ -50,7 +50,7 @@
 		</data>
 		<key>Modules/GraphQLite.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		poGe6R5HuHTbFTBypQcyIzYsp6U=
+		h8sFVMs3wQberbkeg14GG7TWJIY=
 		</data>
 		<key>Modules/GraphQLite.swiftmodule/x86_64.swiftdoc</key>
 		<data>
@@ -62,7 +62,7 @@
 		</data>
 		<key>Modules/GraphQLite.swiftmodule/x86_64.swiftmodule</key>
 		<data>
-		poGe6R5HuHTbFTBypQcyIzYsp6U=
+		h8sFVMs3wQberbkeg14GG7TWJIY=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -103,7 +103,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			GKXvwO8mutLwK+O7N3IJj7eHH1aonlqnHZdx9b45l5Y=
+			8g/SgPGaYOY0qqvQ5r6vEJk5OGPSfmHn58GCtfdMTXU=
 			</data>
 		</dict>
 		<key>Modules/GraphQLite.swiftmodule/arm64.swiftdoc</key>
@@ -124,7 +124,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			GKXvwO8mutLwK+O7N3IJj7eHH1aonlqnHZdx9b45l5Y=
+			8g/SgPGaYOY0qqvQ5r6vEJk5OGPSfmHn58GCtfdMTXU=
 			</data>
 		</dict>
 		<key>Modules/GraphQLite.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
@@ -145,7 +145,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			8rwKPxUnziHwiUNZDAK7/S5doMn3FKiAfbzRvYbNnLY=
+			uB5Q4zUbfqYmesMZCTutc/FCqATy94UdTnD8ikLXrEk=
 			</data>
 		</dict>
 		<key>Modules/GraphQLite.swiftmodule/x86_64.swiftdoc</key>
@@ -166,7 +166,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			8rwKPxUnziHwiUNZDAK7/S5doMn3FKiAfbzRvYbNnLY=
+			uB5Q4zUbfqYmesMZCTutc/FCqATy94UdTnD8ikLXrEk=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
