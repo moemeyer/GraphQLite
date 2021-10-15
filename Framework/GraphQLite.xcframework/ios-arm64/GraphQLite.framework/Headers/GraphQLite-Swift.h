@@ -236,6 +236,7 @@ SWIFT_CLASS("_TtC10GraphQLite11GQLDatabase")
 
 
 
+
 SWIFT_CLASS("_TtC10GraphQLite7GQLDate")
 @interface GQLDate : NSObject
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
