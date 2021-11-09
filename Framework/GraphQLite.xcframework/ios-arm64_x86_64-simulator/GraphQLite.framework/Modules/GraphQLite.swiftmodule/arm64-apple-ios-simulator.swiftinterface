@@ -1,5 +1,5 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.5 (swiftlang-1300.0.31.1 clang-1300.0.29.1)
+// swift-compiler-version: Apple Swift version 5.5.1 (swiftlang-1300.0.31.4 clang-1300.0.29.6)
 // swift-module-flags: -target arm64-apple-ios13.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name GraphQLite
 import CryptoKit
 import Foundation
@@ -83,20 +83,20 @@ extension GraphQLite.GQLDatabase {
   public func export(_ table: Swift.String, _ values: [Swift.String : Any]) -> [Swift.String : Any]
 }
 extension GraphQLite.GQLDatabase {
-  public func insert(_ table: Swift.String, _ values: [Swift.String : Any])
-  public func insert(_ table: Swift.String, _ array: [[Swift.String : Any]], _ completion: @escaping () -> Swift.Void = {})
+  public func insert(_ table: Swift.String, _ values: [Swift.String : Any], _ populate: Swift.Bool = false)
+  public func insert(_ table: Swift.String, _ array: [[Swift.String : Any]], _ populate: Swift.Bool = false, _ completion: @escaping () -> Swift.Void = {})
 }
 extension GraphQLite.GQLDatabase {
   public func update(_ table: Swift.String, _ values: [Swift.String : Any])
   public func update(_ table: Swift.String, _ array: [[Swift.String : Any]], _ completion: @escaping () -> Swift.Void = {})
 }
 extension GraphQLite.GQLDatabase {
-  public func insertUpdate(_ table: Swift.String, _ values: [Swift.String : Any])
-  public func insertUpdate(_ table: Swift.String, _ array: [[Swift.String : Any]], _ completion: @escaping () -> Swift.Void = {})
+  public func insertUpdate(_ table: Swift.String, _ values: [Swift.String : Any], _ populate: Swift.Bool = false)
+  public func insertUpdate(_ table: Swift.String, _ array: [[Swift.String : Any]], _ populate: Swift.Bool = false, _ completion: @escaping () -> Swift.Void = {})
 }
 extension GraphQLite.GQLDatabase {
-  public func updateInsert(_ table: Swift.String, _ values: [Swift.String : Any])
-  public func updateInsert(_ table: Swift.String, _ array: [[Swift.String : Any]], _ completion: @escaping () -> Swift.Void = {})
+  public func updateInsert(_ table: Swift.String, _ values: [Swift.String : Any], _ populate: Swift.Bool = false)
+  public func updateInsert(_ table: Swift.String, _ array: [[Swift.String : Any]], _ populate: Swift.Bool = false, _ completion: @escaping () -> Swift.Void = {})
 }
 extension GraphQLite.GQLDatabase {
   public func updateOne(_ table: Swift.String, _ values: [Swift.String : Any], key: Any)
