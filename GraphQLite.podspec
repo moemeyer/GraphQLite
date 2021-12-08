@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
 
   s.source = { :git => 'https://github.com/relatedcode/GraphQLite.git', :tag => s.version }
 
-  s.ios.vendored_frameworks = 'Framework/GraphQLite.xcframework'
+  s.ios.vendored_frameworks = 'ios-sdk/GraphQLite.xcframework'
 
   s.platform = :ios, '13.0'
 

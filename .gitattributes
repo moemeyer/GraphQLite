@@ -1,4 +1,4 @@
-Framework/* linguist-vendored
+ios-sdk/Framework/* linguist-vendored
 
 *.podspec linguist-detectable=false
 
