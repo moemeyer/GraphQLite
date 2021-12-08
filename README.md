@@ -1,6 +1,4 @@
-<img src="https://related.chat/github/header32.png" width="880">
-
----
+# iOS SDK
 
 ## What is this?
 
@@ -28,8 +26,7 @@ You can also read some more about the why [here](https://graphqlite.io/why-is-gr
 
 ---
 
-Installation
-============
+## Installation
 
 ### CocoaPods
 
@@ -41,8 +38,7 @@ pod 'GraphQLite'
 
 ---
 
-Local Database
-==============
+## Local Database
 
 The Local Database manager runs on top of [SQLite](https://sqlite.org/faq.html). GraphQLite provides a lightweight Swift wrapper around SQLite.
 
@@ -416,8 +412,7 @@ GQLDebug.level(.all)
 
 ---
 
-GraphQL Interface
-=================
+## GraphQL Interface
 
 You can connect to single or multiple GraphQL servers with GraphQLite easily. These server connections can be used for Queries, Mutations, and Subscriptions.
 
@@ -635,8 +630,7 @@ let query = GQLQuery["ObjectSubscription"]
 
 ---
 
-Sync Engine
-===========
+## Sync Engine
 
 GraphQLite supports the offline-first application development approach. You can make all the database changes locally, and these changes will be synced automatically to the server whenever the network connection is live.
 
@@ -714,8 +708,7 @@ sync.force("UpdateUser", values) { result, error in
 
 ---
 
-User Authentication
-===================
+## User Authentication
 
 GraphQLite provides an integrated Auth0 implementation for user authentication.
 
@@ -788,8 +781,7 @@ GQLAuth.updatePassword(password: password) { error in
 
 ---
 
-File Storage
-============
+## File Storage
 
 GraphQLite provides an integrated Amazon S3 implementation for file storage.
 
@@ -852,8 +844,7 @@ storage.delete(bucket, key) { error in
 
 ---
 
-Push Notification
-=================
+## Push Notification
 
 GraphQLite provides an integrated OneSignal implementation for sending push notifications.
 
@@ -927,8 +918,7 @@ func application(_ application: UIApplication, didReceiveRemoteNotification user
 
 ---
 
-Limitations
-===========
+## Limitations
 
 The GraphQLite toolkit is in its initial release. It is functional and can handle most workloads. However, there are some features that are currently not supported:
 
