@@ -1,4 +1,4 @@
-# Server Admin
+# Admin Console
 
 ## What is this?
 

@@ -28,11 +28,11 @@ export default defineUserConfig<DefaultThemeOptions>({
         children: [
           {
             text: "Core Server",
-            link: "/server-core/README.md",
+            link: "/core-server/README.md",
           },
           {
-            text: "Server Admin",
-            link: "/server-admin/README.md",
+            text: "Admin Console",
+            link: "/admin-console/README.md",
           },
           {
             text: "Studio Mac",
@@ -43,8 +43,8 @@ export default defineUserConfig<DefaultThemeOptions>({
             link: "/studio-web/README.md",
           },
           {
-            text: "Studio Server",
-            link: "/studio-server/README.md",
+            text: "Studio API",
+            link: "/studio-api/README.md",
           },
           {
             text: "iOS SDK",

@@ -4,10 +4,10 @@ title: Home
 heroImage: /images/hero.png
 actions:
   - text: Core Server
-    link: /server-core/README.md
+    link: /core-server/README.md
     type: secondary
-  - text: Server Admin
-    link: /server-admin/README.md
+  - text: Admin Console
+    link: /admin-console/README.md
     type: secondary
   - text: Studio Mac
     link: /studio-mac/README.md
@@ -15,8 +15,8 @@ actions:
   - text: Studio Web
     link: /studio-web/README.md
     type: secondary
-  - text: Studio Server
-    link: /studio-server/README.md
+  - text: Studio API
+    link: /studio-api/README.md
     type: secondary
   - text: iOS SDK
     link: /sdk-ios/README.md

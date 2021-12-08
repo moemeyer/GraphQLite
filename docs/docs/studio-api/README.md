@@ -1,4 +1,4 @@
-# Studio Server
+# Studio API
 
 ## What is this?
 
