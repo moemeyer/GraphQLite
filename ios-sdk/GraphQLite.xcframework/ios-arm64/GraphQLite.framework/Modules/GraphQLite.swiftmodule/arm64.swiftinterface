@@ -20,19 +20,46 @@ public typealias GQLErrorCallback = (Swift.Error?) -> Swift.Void
 public typealias GQLResultCallback = ([Swift.String : Any], Swift.Error?) -> Swift.Void
 @objc public class GQLServer : ObjectiveC.NSObject {
   public init(HTTP linkHTTP: Swift.String, headers headersHTTP: [Swift.String : Swift.String] = [:])
-  public init(WebSocket linkWebS: Swift.String, headers headersWebS: [Swift.String : Swift.String] = [:])
-  public init(HTTP linkHTTP: Swift.String, headers headersHTTP: [Swift.String : Swift.String] = [:], WebSocket linkWebS: Swift.String, headers headersWebS: [Swift.String : Swift.String] = [:])
-  public init(Hasura linkHasura: Swift.String)
-  public init(Hasura linkHasura: Swift.String, secret: Swift.String)
-  public init(Hasura linkHasura: Swift.String, headers: [Swift.String : Swift.String])
+  public init(WebSocket linkWebS: Swift.String, headers headersWebS: [Swift.String : Swift.String] = [:], wsprotocol: Swift.String? = nil)
+  public init(HTTP linkHTTP: Swift.String, headers headersHTTP: [Swift.String : Swift.String] = [:], WebSocket linkWebS: Swift.String, headers headersWebS: [Swift.String : Swift.String] = [:], wsprotocol: Swift.String? = nil)
+  public init(_ linkGQLite: Swift.String)
+  public init(Hasura linkHasura: Swift.String, wsprotocol: Swift.String? = nil)
+  public init(Hasura linkHasura: Swift.String, secret: Swift.String, wsprotocol: Swift.String? = nil)
+  public init(Hasura linkHasura: Swift.String, headers: [Swift.String : Swift.String], wsprotocol: Swift.String? = nil)
   public init(AppSync linkAppS: Swift.String, key: Swift.String)
   @objc deinit
+  public func connectAuth(_ callback: @escaping GraphQLite.GQLErrorCallback)
+  public func sendAuth(_ query: Swift.String, _ variables: [Swift.String : Any], _ callback: @escaping GraphQLite.GQLResultCallback)
   public func connect(_ callback: @escaping GraphQLite.GQLErrorCallback)
   public func disconnect()
-  public func mutation(_ query: Swift.String, _ variables: [Swift.String : Any], _ callback: @escaping GraphQLite.GQLResultCallback)
+  public func send(_ query: Swift.String, _ variables: [Swift.String : Any], _ callback: @escaping GraphQLite.GQLResultCallback)
   public func query(_ query: Swift.String, _ variables: [Swift.String : Any], _ callback: @escaping GraphQLite.GQLResultCallback)
+  public func mutation(_ query: Swift.String, _ variables: [Swift.String : Any], _ callback: @escaping GraphQLite.GQLResultCallback)
   public func subscription(_ query: Swift.String, _ variables: [Swift.String : Any], _ callback: @escaping GraphQLite.GQLResultCallback) -> Swift.String
   public func subscription(cancel callbackId: Swift.String, _ callback: @escaping GraphQLite.GQLErrorCallback)
+}
+@objc @_inheritsConvenienceInitializers public class GQLAuth0 : ObjectiveC.NSObject {
+  public class func setup(_ domain: Swift.String, _ clientId: Swift.String, _ clientSecret: Swift.String, _ connection: Swift.String)
+  @objc override dynamic public init()
+  @objc deinit
+}
+extension GraphQLite.GQLAuth0 {
+  public class func userId() -> Swift.String
+}
+extension GraphQLite.GQLAuth0 {
+  public class func signIn(_ email: Swift.String, _ password: Swift.String, _ completion: @escaping (Swift.Error?) -> Swift.Void)
+}
+extension GraphQLite.GQLAuth0 {
+  public class func signUp(_ email: Swift.String, _ password: Swift.String, _ completion: @escaping (Swift.Error?) -> Swift.Void)
+}
+extension GraphQLite.GQLAuth0 {
+  public class func checkPassword(_ password: Swift.String, _ completion: @escaping (Swift.Error?) -> Swift.Void)
+}
+extension GraphQLite.GQLAuth0 {
+  public class func updatePassword(_ password: Swift.String, _ completion: @escaping (Swift.Error?) -> Swift.Void)
+}
+extension GraphQLite.GQLAuth0 {
+  public class func signOut()
 }
 @objc public class GQLStorage : ObjectiveC.NSObject {
   public init(AmazonS3 regionName: Swift.String, _ secretKey: Swift.String, _ accessKey: Swift.String)
@@ -42,15 +69,26 @@ public typealias GQLResultCallback = ([Swift.String : Any], Swift.Error?) -> Swi
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers public class GQLAuth : ObjectiveC.NSObject {
-  public class func setup(_ domain: Swift.String, _ clientId: Swift.String, _ clientSecret: Swift.String, _ connection: Swift.String = "")
-  public class func userId() -> Swift.String
-  public class func signIn(email: Swift.String, password: Swift.String, completion: @escaping (Swift.Error?) -> Swift.Void)
-  public class func signUp(email: Swift.String, password: Swift.String, completion: @escaping (Swift.Error?) -> Swift.Void)
-  public class func checkPassword(password: Swift.String, completion: @escaping (Swift.Error?) -> Swift.Void)
-  public class func updatePassword(password: Swift.String, completion: @escaping (Swift.Error?) -> Swift.Void)
-  public class func signOut()
+  public class func setup(_ link: Swift.String)
   @objc override dynamic public init()
   @objc deinit
+}
+extension GraphQLite.GQLAuth {
+  public class func userId() -> Swift.String
+}
+extension GraphQLite.GQLAuth {
+  public class func login(_ email: Swift.String, _ password: Swift.String, _ completion: @escaping (Swift.Error?) -> Swift.Void)
+  public class func logout(_ completion: @escaping (Swift.Error?) -> Swift.Void)
+}
+extension GraphQLite.GQLAuth {
+  public class func create(_ email: Swift.String, _ password: Swift.String, _ completion: @escaping (Swift.Error?) -> Swift.Void)
+  public class func update(_ email: Swift.String, _ password: Swift.String, _ completion: @escaping (Swift.Error?) -> Swift.Void)
+}
+extension GraphQLite.GQLAuth {
+  public class func refresh(_ completion: @escaping ([Swift.String : Swift.String], Swift.Error?) -> Swift.Void)
+}
+extension GraphQLite.GQLAuth {
+  public class func verify(_ completion: @escaping (Swift.Error?) -> Swift.Void)
 }
 public enum GQLObserverType {
   case insert
@@ -253,7 +291,9 @@ extension GraphQLite.GQLObject {
   public static func count(_ db: GraphQLite.GQLDatabase, _ condition: Swift.String, _ arguments: [Swift.String : Any]) -> Swift.Int
 }
 extension GraphQLite.GQLObject {
+  @discardableResult
   public static func createObserver(_ db: GraphQLite.GQLDatabase, _ type: GraphQLite.GQLObserverType, _ condition: Swift.String = "", callback: @escaping GraphQLite.GQLObserverCallback) -> Swift.String
+  @discardableResult
   public static func createObserver(_ db: GraphQLite.GQLDatabase, _ types: [GraphQLite.GQLObserverType], _ condition: Swift.String = "", callback: @escaping GraphQLite.GQLObserverCallback) -> Swift.String
   public static func removeObserver(_ db: GraphQLite.GQLDatabase, _ observerId: Swift.String?)
   public static func removeObserver(_ db: GraphQLite.GQLDatabase, _ observerId: Swift.String)
@@ -274,7 +314,7 @@ public enum GQLQueryFormat {
   @objc deinit
 }
 @objc public class GQLSync : ObjectiveC.NSObject {
-  public init(_ server: GraphQLite.GQLServer, interval: Foundation.TimeInterval = 0.5)
+  public init(_ server: GraphQLite.GQLServer, auth: Swift.Bool = false, interval: Foundation.TimeInterval = 0.5)
   @objc deinit
 }
 extension GraphQLite.GQLSync {
@@ -284,7 +324,9 @@ extension GraphQLite.GQLSync {
   public func lazy(_ queryName: Swift.String, _ variables: [Swift.String : Any], _ keyId: Any)
   public func steady(_ queryName: Swift.String, _ variables: [Swift.String : Any], _ keyId: Any)
   public func force(_ queryName: Swift.String, _ variables: [Swift.String : Any])
+  public func forceAuth(_ queryName: Swift.String, _ variables: [Swift.String : Any])
   public func force(_ queryName: Swift.String, _ variables: [Swift.String : Any], _ callback: @escaping GraphQLite.GQLResultCallback)
+  public func forceAuth(_ queryName: Swift.String, _ variables: [Swift.String : Any], _ callback: @escaping GraphQLite.GQLResultCallback)
 }
 public enum GQLDebugLevel {
   case none

@@ -215,6 +215,29 @@ SWIFT_CLASS("_TtC10GraphQLite7GQLAuth")
 @end
 
 
+
+
+
+
+
+
+
+
+
+SWIFT_CLASS("_TtC10GraphQLite8GQLAuth0")
+@interface GQLAuth0 : NSObject
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
+
+
+
+
+
+
+
+
 SWIFT_CLASS("_TtC10GraphQLite11GQLDatabase")
 @interface GQLDatabase : NSObject
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
@@ -532,6 +555,29 @@ SWIFT_CLASS("_TtC10GraphQLite7GQLAuth")
 @interface GQLAuth : NSObject
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
+
+
+
+
+
+
+
+
+
+
+
+SWIFT_CLASS("_TtC10GraphQLite8GQLAuth0")
+@interface GQLAuth0 : NSObject
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
+
+
+
+
+
+
 
 
 SWIFT_CLASS("_TtC10GraphQLite11GQLDatabase")
