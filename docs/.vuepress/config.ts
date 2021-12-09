@@ -24,7 +24,7 @@ export default defineUserConfig<DefaultThemeOptions>({
     repo: "relatedcode/GraphQLite",
     navbar: [
       {
-        text: "Products",
+        text: "Server",
         children: [
           {
             text: "Core Server",
@@ -34,6 +34,11 @@ export default defineUserConfig<DefaultThemeOptions>({
             text: "Admin Console",
             link: "/admin-console/README.md",
           },
+        ],
+      },
+      {
+        text: "Studio",
+        children: [
           {
             text: "Studio Mac",
             link: "/studio-mac/README.md",
@@ -46,6 +51,11 @@ export default defineUserConfig<DefaultThemeOptions>({
             text: "Studio API",
             link: "/studio-api/README.md",
           },
+        ],
+      },
+      {
+        text: "SDK",
+        children: [
           {
             text: "iOS SDK",
             link: "/sdk-ios/README.md",
