@@ -30,6 +30,25 @@ export const createBucket = async (
   }
 };
 
+export const deleteBucket = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  try {
+    const { name } = req.params;
+
+    await s3.deleteBucket({ Bucket: name }).promise();
+
+    res.locals.data = {
+      success: true,
+    };
+    return next("router");
+  } catch (err) {
+    return next(err);
+  }
+};
+
 export const listBuckets = async (
   req: express.Request,
   res: express.Response,
@@ -124,6 +143,30 @@ export const getObject = async (
   }
 };
 
+export const deleteObject = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  try {
+    const { name, key } = req.params;
+
+    await s3
+      .deleteObject({
+        Bucket: name,
+        Key: key,
+      })
+      .promise();
+
+    res.locals.data = {
+      success: true,
+    };
+    return next("router");
+  } catch (err) {
+    return next(err);
+  }
+};
+
 export const listObjects = async (
   req: express.Request,
   res: express.Response,
@@ -135,7 +178,14 @@ export const listObjects = async (
     const objects = await s3.listObjects({ Bucket: name }).promise();
 
     res.locals.data = {
-      data: objects.Contents,
+      data: objects.Contents
+        ? await Promise.all(
+            objects.Contents.map(async (o) => ({
+              ...o,
+              Head: await getHeadObject(s3, name, o.Key as string),
+            }))
+          )
+        : [],
     };
     return next("router");
   } catch (err) {

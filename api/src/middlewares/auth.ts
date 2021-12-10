@@ -1,10 +1,11 @@
 import express from "express";
 import { verifyToken } from "utils/jwt";
 
-export const checkJWT = async (token?: string) => {
+export const checkJWT = async (token?: string, isAdmin = false) => {
   if (!token) return false;
   try {
-    await verifyToken(token);
+    const decodedToken = (await verifyToken(token)) as any;
+    if (isAdmin && !decodedToken.admin) return false;
     return true;
   } catch (err) {
     return false;

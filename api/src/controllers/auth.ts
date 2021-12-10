@@ -73,11 +73,11 @@ export const update = async (
   next: express.NextFunction
 ) => {
   try {
-    const { uid } = res.locals;
+    const { uid, admin } = res.locals;
     const { email, password } = req.body;
     const { id } = req.params;
 
-    if (id !== uid)
+    if (!admin && id !== uid)
       throw new Error("You are not authorized to update this user.");
 
     await updateGQLUserDB({
@@ -95,6 +95,32 @@ export const update = async (
   }
 };
 
+export const remove = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  try {
+    const { uid, admin } = res.locals;
+    const { id } = req.params;
+
+    if (!admin && id !== uid)
+      throw new Error("You are not authorized to delete this user.");
+
+    await updateGQLUserDB({
+      objectId: id,
+      isDeleted: true,
+    });
+
+    res.locals.data = {
+      success: true,
+    };
+    return next("router");
+  } catch (err) {
+    return next(err);
+  }
+};
+
 export const login = async (
   req: express.Request,
   res: express.Response,
@@ -103,7 +129,7 @@ export const login = async (
   try {
     const { email, password } = req.body;
 
-    const user = await getGQLUserDB({ where: { email } });
+    const user = await getGQLUserDB({ where: { email, isDeleted: false } });
     const id = user.objectId;
 
     if (!verifyPassword(password, user.passwordHash))

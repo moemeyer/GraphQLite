@@ -35,7 +35,7 @@ export function createGQLAdminSchema() {
     type GQLAdmin {
       objectId: String!
       email: String!
-      passwordHash: String!
+      isDeleted: Boolean!
       createdAt: Date!
       updatedAt: Date!
     }
@@ -66,10 +66,10 @@ export function createGQLAdminResolver() {
     Query: {
       GQLAdmins: async (root: any, args: any) => {
         let filter = {};
-        if (!args) {
-          return await Postgres.models[MODEL_NAME].findAll();
-        }
-        return await Postgres.models[MODEL_NAME].findAll({ where: filter });
+        return await Postgres.models[MODEL_NAME].findAll({
+          where: filter,
+          order: [["createdAt", "ASC"]],
+        });
       },
     },
   };

@@ -40,6 +40,25 @@ export const refresh = async (
 
     const id = await verifyRefreshToken(refreshToken);
 
+    if (id === "superadmin") {
+      const token = createToken({
+        sub: id,
+        admin: true,
+        user: {
+          uid: id,
+          email: process.env.ADMIN_EMAIL,
+        },
+      });
+
+      res.locals.data = {
+        uid: id,
+        idToken: token,
+        refreshToken,
+        expires: parseInt(JWT_EXPIRES),
+      };
+      return next("router");
+    }
+
     const user = await getGQLAdminDB({ where: { objectId: id } });
 
     const token = createToken({
@@ -112,6 +131,30 @@ export const login = async (
   try {
     const { email, password } = req.body;
 
+    if (
+      email === process.env.ADMIN_EMAIL &&
+      password === process.env.ADMIN_PASSWORD
+    ) {
+      const id = "superadmin";
+      const token = createToken({
+        sub: id,
+        admin: true,
+        user: {
+          uid: id,
+          email: process.env.ADMIN_EMAIL,
+        },
+      });
+      const refreshToken = await createRefreshToken(id);
+
+      res.locals.data = {
+        uid: id,
+        idToken: token,
+        refreshToken,
+        expires: parseInt(JWT_EXPIRES),
+      };
+      return next("router");
+    }
+
     const user = await getGQLAdminDB({ where: { email } });
     const id = user.objectId;
 
@@ -138,6 +181,21 @@ export const login = async (
   } catch (err: any) {
     if (err.message === "Cannot read property 'dataValues' of null")
       err.message = "The email is not associated with an existing user.";
+    return next(err);
+  }
+};
+
+export const getSecretKey = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  try {
+    res.locals.data = {
+      key: process.env.SECRET_KEY,
+    };
+    return next("router");
+  } catch (err: any) {
     return next(err);
   }
 };

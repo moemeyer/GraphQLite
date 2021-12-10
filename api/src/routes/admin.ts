@@ -23,14 +23,19 @@ const dateSchema = createDateSchema();
 const dateResolver = createDateResolver();
 
 /* Resolvers */
-const resolvers = merge(gqlUserResolver, gqlAdminResolver, dateResolver);
+const adminResolvers = merge(gqlUserResolver, gqlAdminResolver, dateResolver);
 
 /* Schemas */
-const typeDefs = [gqlUserSchema, gqlAdminSchema, dateSchema];
+const adminTypeDefs = [gqlUserSchema, gqlAdminSchema, dateSchema];
 
-const schema = makeExecutableSchema({ typeDefs, resolvers });
+export const adminSchema = makeExecutableSchema({
+  typeDefs: adminTypeDefs,
+  resolvers: adminResolvers,
+});
 
 const router = Router();
+
+router.get("/secret_key", authMiddleware, onlyAdmin, admin.getSecretKey);
 
 /* Admin Auth endpoints */
 router.post("/auth/users", admin.create);
@@ -40,6 +45,12 @@ router.post("/auth/refresh", admin.refresh);
 
 /* Admin Storage endpoints */
 router.post("/storage/b", authMiddleware, onlyAdmin, storage.createBucket);
+router.delete(
+  "/storage/b/:name",
+  authMiddleware,
+  onlyAdmin,
+  storage.deleteBucket
+);
 router.get("/storage/b", authMiddleware, onlyAdmin, storage.listBuckets);
 router.get(
   "/storage/b/:name/o",
@@ -53,7 +64,7 @@ router.use(
   authMiddleware,
   onlyAdmin,
   graphqlHTTP({
-    schema,
+    schema: adminSchema,
     graphiql: false,
   })
 );
