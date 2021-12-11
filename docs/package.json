@@ -1,23 +1,16 @@
 {
-  "name": "documentation",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
   "scripts": {
     "dev": "vuepress dev",
     "build": "vuepress build"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/relatedcode/Documentation.git"
+    "url": "git+https://github.com/relatedcode/GraphQLite.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "bugs": {
-    "url": "https://github.com/relatedcode/Documentation/issues"
+    "url": "https://github.com/relatedcode/GraphQLite/issues"
   },
-  "homepage": "https://github.com/relatedcode/Documentation#readme",
+  "homepage": "https://github.com/relatedcode/GraphQLite#readme",
   "devDependencies": {
     "vuepress": "^2.0.0-beta.27"
   }
