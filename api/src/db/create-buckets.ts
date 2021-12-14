@@ -1,3 +1,4 @@
+import { serverErrors } from "app";
 import AWS from "aws-sdk";
 import fs from "fs";
 import path from "path";
@@ -11,11 +12,13 @@ const s3 = new AWS.S3({
 });
 
 export default async function createBuckets() {
-  let customBuckets: string[] = [];
   try {
-    const customBucketsFile = fs
-      .readFileSync(path.resolve(__dirname, "../../config/buckets.txt"))
-      .toString();
+    let customBuckets: string[] = [];
+    const bucketsPath = path.resolve(__dirname, "../../config/buckets.txt");
+
+    if (!fs.existsSync(bucketsPath)) throw new Error("Buckets not found");
+
+    const customBucketsFile = fs.readFileSync(bucketsPath).toString();
     customBuckets = customBucketsFile.split("\n");
 
     const buckets = await s3.listBuckets().promise();
@@ -31,7 +34,10 @@ export default async function createBuckets() {
         }
       })
     );
-  } catch (err) {
-    console.error("No custom buckets.");
+  } catch (err: any) {
+    console.error(err.message);
+    if (err.message !== "Buckets not found") {
+      serverErrors.push(err.message);
+    }
   }
 }

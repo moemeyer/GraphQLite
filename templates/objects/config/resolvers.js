@@ -1,4 +1,3 @@
-const OBJECT_CHANGE = "OBJECT_CHANGE";
 const MODEL_NAME_OBJECT = "objects";
 
 module.exports.createObjectResolver = function (
@@ -11,7 +10,7 @@ module.exports.createObjectResolver = function (
     Subscription: {
       object: {
         subscribe: withFilter(
-          () => pubsub.asyncIterator(OBJECT_CHANGE),
+          () => pubsub.asyncIterator(MODEL_NAME_OBJECT),
           (payload, args) => {
             if (args.objectId) {
               return payload.object.objectId === args.objectId;
@@ -29,7 +28,7 @@ module.exports.createObjectResolver = function (
     Mutation: {
       createObject: async (root, args, context, info) => {
         const object = await database.models[MODEL_NAME_OBJECT].create(args);
-        pubsub.publish(OBJECT_CHANGE, {
+        pubsub.publish(MODEL_NAME_OBJECT, {
           object: object.dataValues,
         });
         return object.dataValues;
@@ -42,7 +41,7 @@ module.exports.createObjectResolver = function (
         const object = (
           await database.models[MODEL_NAME_OBJECT].update(args, filter)
         )[1][0];
-        pubsub.publish(OBJECT_CHANGE, {
+        pubsub.publish(MODEL_NAME_OBJECT, {
           object: object.dataValues,
         });
         return object.dataValues;

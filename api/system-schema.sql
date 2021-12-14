@@ -1,4 +1,4 @@
-create table "gql_users" (
+create table if not exists "gql_users" (
   "objectId" varchar(255) primary key,
   "email" varchar(255) not null unique,
   "passwordHash" varchar(255) not null,
@@ -7,7 +7,7 @@ create table "gql_users" (
   "updatedAt" timestamptz not null default now()
 );
 
-create table "gql_admins" (
+create table if not exists "gql_admins" (
   "objectId" varchar(255) primary key,
   "email" varchar(255) not null unique,
   "passwordHash" varchar(255) not null,

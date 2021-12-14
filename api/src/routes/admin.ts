@@ -36,6 +36,9 @@ export const adminSchema = makeExecutableSchema({
 const router = Router();
 
 router.get("/secret_key", authMiddleware, onlyAdmin, admin.getSecretKey);
+router.get("/status", authMiddleware, onlyAdmin, admin.getSchemaStatus);
+router.get("/config", authMiddleware, onlyAdmin, admin.getConfigFiles);
+router.post("/config", authMiddleware, onlyAdmin, admin.editConfigFiles);
 
 /* Admin Auth endpoints */
 router.post("/auth/users", admin.create);

@@ -1,6 +1,9 @@
+import { serverErrors } from "app";
 import { createGQLAdminDB, getGQLAdminDB } from "db/schema/GQLAdmin";
 import express from "express";
+import fs from "fs";
 import { JWT_EXPIRES } from "lib/config";
+import path from "path";
 import { hashPassword, verifyPassword } from "utils/hash";
 import { createToken } from "utils/jwt";
 import {
@@ -193,6 +196,93 @@ export const getSecretKey = async (
   try {
     res.locals.data = {
       key: process.env.SECRET_KEY,
+    };
+    return next("router");
+  } catch (err: any) {
+    return next(err);
+  }
+};
+
+export const getConfigFiles = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  try {
+    let resolvers = "";
+    const resolversPath = path.resolve(__dirname, "../../config/resolvers.js");
+    if (fs.existsSync(resolversPath))
+      resolvers = fs.readFileSync(resolversPath).toString();
+
+    let schemaSQL = "";
+    const schemaSQLPath = path.resolve(__dirname, "../../config/schema.sql");
+    if (fs.existsSync(schemaSQLPath))
+      schemaSQL = fs.readFileSync(schemaSQLPath).toString();
+
+    let schemaGraphQL = "";
+    const schemaGraphQLPath = path.resolve(
+      __dirname,
+      "../../config/schema.graphql"
+    );
+    if (fs.existsSync(schemaGraphQLPath))
+      schemaGraphQL = fs.readFileSync(schemaGraphQLPath).toString();
+
+    res.locals.data = {
+      resolvers,
+      schemaSQL,
+      schemaGraphQL,
+    };
+    return next("router");
+  } catch (err: any) {
+    return next(err);
+  }
+};
+
+export const getSchemaStatus = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  try {
+    res.locals.data = {
+      errors: serverErrors.length ? serverErrors : null,
+    };
+    return next("router");
+  } catch (err: any) {
+    return next(err);
+  }
+};
+
+export const editConfigFiles = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  try {
+    const { resolvers, schemaGraphQL, schemaSQL } = req.body;
+
+    // Get config files path
+    const resolversPath = path.resolve(__dirname, "../../config/resolvers.js");
+    const schemaGraphQLPath = path.resolve(
+      __dirname,
+      "../../config/schema.graphql"
+    );
+    const schemaSQLPath = path.resolve(__dirname, "../../config/schema.sql");
+
+    if (resolvers) {
+      fs.writeFileSync(resolversPath, resolvers);
+    }
+
+    if (schemaGraphQL) {
+      fs.writeFileSync(schemaGraphQLPath, schemaGraphQL);
+    }
+
+    if (schemaSQL) {
+      fs.writeFileSync(schemaSQLPath, schemaSQL);
+    }
+
+    res.locals.data = {
+      success: true,
     };
     return next("router");
   } catch (err: any) {

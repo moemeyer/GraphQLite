@@ -1,4 +1,4 @@
-create table "objects"(
+create table if not exists "objects"(
   "objectId" varchar(255) primary key,
   "text" text,
   "number" integer,

@@ -80,6 +80,8 @@ export const update = async (
     if (!admin && id !== uid)
       throw new Error("You are not authorized to update this user.");
 
+    await getGQLUserDB({ where: { objectId: id, isDeleted: false } });
+
     await updateGQLUserDB({
       objectId: id,
       ...(email && { email }),
@@ -90,7 +92,9 @@ export const update = async (
       uid: id,
     };
     return next("router");
-  } catch (err) {
+  } catch (err: any) {
+    if (err.message === "Cannot read property 'dataValues' of null")
+      err.message = "The user has been deleted.";
     return next(err);
   }
 };

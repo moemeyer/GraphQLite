@@ -22,14 +22,16 @@ import { withFilter } from "utils/with-filter";
 import { WebSocketServer } from "ws";
 import url from "url";
 
+export let serverErrors: string[] = [];
+
+// RESOLVERS
 let exportedResolvers: any = {};
-let exportedSchema: any = "";
 let mergedResolvers: any = {};
 try {
-  exportedResolvers = require(path.resolve(
-    __dirname,
-    "../config/resolvers.js"
-  ));
+  const resolversPath = path.resolve(__dirname, "../config/resolvers.js");
+
+  if (!fs.existsSync(resolversPath)) throw new Error("Resolvers not found");
+  exportedResolvers = require(resolversPath);
 
   Object.keys(exportedResolvers).forEach((resolver) => {
     mergedResolvers = merge(
@@ -37,12 +39,22 @@ try {
       mergedResolvers
     );
   });
-
-  exportedSchema = fs
-    .readFileSync(path.resolve(__dirname, "../config/schema.graphql"))
-    .toString();
 } catch (err: any) {
-  console.error("No GraphQL config files.");
+  console.error(err.message);
+  serverErrors.push(err.message);
+}
+
+// GRAPHQL SCHEMA
+let exportedSchema: any = "";
+try {
+  const schemaPath = path.resolve(__dirname, "../config/schema.graphql");
+
+  if (!fs.existsSync(schemaPath)) throw new Error("GraphQL schema not found");
+
+  exportedSchema = fs.readFileSync(schemaPath).toString();
+} catch (err: any) {
+  console.error(err.message);
+  serverErrors.push(err.message);
 }
 
 createTables();
@@ -51,13 +63,16 @@ createBuckets();
 const dateSchema = createDateSchema();
 const dateResolver = createDateResolver();
 
-/* Resolvers */
 const resolvers = merge(mergedResolvers, dateResolver);
-
-/* Schemas */
 const typeDefs = [exportedSchema, dateSchema];
 
-const schema = makeExecutableSchema({ typeDefs, resolvers });
+let schema = makeExecutableSchema({ typeDefs: [], resolvers: {} });
+try {
+  schema = makeExecutableSchema({ typeDefs, resolvers });
+} catch (err: any) {
+  console.error(err.message);
+  serverErrors.push(err.message);
+}
 
 const app = express();
 

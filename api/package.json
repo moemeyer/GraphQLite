@@ -5,8 +5,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc -p tsconfig.json",
     "start": "node dist/app.js",
-    "watch:config": "nodemon --ext js,graphql --watch config dist/app.js",
-    "dev": "concurrently \"tsc -w -p tsconfig.json\" \"NODE_PATH=./dist nodemon --ignore './models-auto/' -r dotenv/config dist/app.js\""
+    "watch:config": "nodemon --ext '*' --delay 3 --watch config dist/app.js",
+    "dev": "concurrently \"tsc -w -p tsconfig.json\" \"NODE_PATH=./dist nodemon --ignore './models-auto/' --ext 'js,ts,sql,graphql' --delay 2 -r dotenv/config dist/app.js\""
   },
   "keywords": [],
   "author": "",
