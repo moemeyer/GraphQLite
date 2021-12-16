@@ -14,12 +14,17 @@ export default async function createTables() {
     await Postgres.query(systemSchema);
 
     // CUSTOM SCHEMA TABLES
-    const sqlPath = path.resolve(__dirname, "../../config/schema.sql");
+    try {
+      const sqlPath = path.resolve(__dirname, "../../config/schema.sql");
 
-    if (!fs.existsSync(sqlPath)) throw new Error("SQL schema not found");
+      if (!fs.existsSync(sqlPath)) throw new Error("SQL schema not found");
 
-    const customSchema = fs.readFileSync(sqlPath).toString();
-    await Postgres.query(customSchema);
+      const customSchema = fs.readFileSync(sqlPath).toString();
+      await Postgres.query(customSchema);
+    } catch (err: any) {
+      console.error(err.message);
+      serverErrors.push(err.message);
+    }
 
     const sequelizeModelFolder = path.resolve(__dirname, "../../models-auto");
     if (fs.existsSync(sequelizeModelFolder)) {
