@@ -2,21 +2,7 @@
 
 ## What is this?
 
-GraphQLite is a toolkit to work with GraphQL servers easily. It also provides several other features to make life easier during iOS application development.
-
-You can also read some more about the why [here](https://graphqlite.io/why-is-graphqlite).
-
----
-
-## Features
-
-- [Local Database](#Local-Database)
-- [GraphQL Interface](#GraphQL-Interface)
-- [Sync Engine](#Sync-Engine)
-- [User Authentication](#User-Authentication)
-- [File Storage](#File-Storage)
-- [Push Notification](#Push-Notification)
-- [Limitations](#Limitations)
+GQLite iOS SDK is a toolkit to work with GraphQL servers easily. It also provides several other features to make life easier during iOS application development.
 
 ## Requirements
 
@@ -24,19 +10,15 @@ You can also read some more about the why [here](https://graphqlite.io/why-is-gr
 - Xcode 12.0+
 - Swift 5.0+
 
----
-
 ## Installation
 
 ### CocoaPods
 
 To use GraphQLite with [CocoaPods](https://cocoapods.org) specify in your `Podfile`:
 
-```ruby
+```sh
 pod 'GraphQLite'
 ```
-
----
 
 ## Local Database
 
@@ -80,7 +62,7 @@ class User: NSObject, GQLObject {
 
 By creating the User class above, GraphQLite will automatically create the following SQLite Table for you:
 
-```ruby
+```sql
 CREATE TABLE IF NOT EXISTS User (userId INTEGER PRIMARY KEY NOT NULL, name TEXT, age INTEGER, approved INTEGER);
 ```
 
@@ -410,8 +392,6 @@ GQLDebug.level(.error)
 GQLDebug.level(.all)
 ```
 
----
-
 ## GraphQL Interface
 
 You can connect to single or multiple GraphQL servers with GraphQLite easily. These server connections can be used for Queries, Mutations, and Subscriptions.
@@ -586,7 +566,7 @@ server.subscription(cancel: subscriptionId) { error in
 
 If you prefer to keep all your mutations, queries and subscriptions in a common library, then you shall add one (or multiple) `*.graphql` file(s) into your Xcode project. The content of these files should be something like this:
 
-```ruby
+```graphql
 mutation CreateObject($object: CreateObjectsInput!) {
   createObjects(input: $object) {
     objectId, text, number, double, boolean, createdAt, updatedAt
@@ -627,8 +607,6 @@ let query = GQLQuery["ObjectQuery"]
 ```swift
 let query = GQLQuery["ObjectSubscription"]
 ```
-
----
 
 ## Sync Engine
 
@@ -706,8 +684,6 @@ sync.force("UpdateUser", values) { result, error in
 }
 ```
 
----
-
 ## User Authentication
 
 GraphQLite provides an integrated Auth0 implementation for user authentication.
@@ -779,8 +755,6 @@ GQLAuth.updatePassword(password: password) { error in
 }
 ```
 
----
-
 ## File Storage
 
 GraphQLite provides an integrated Amazon S3 implementation for file storage.
@@ -841,8 +815,6 @@ storage.delete(bucket, key) { error in
   }
 }
 ```
-
----
 
 ## Push Notification
 
@@ -915,8 +887,6 @@ func application(_ application: UIApplication, didReceiveRemoteNotification user
   }
 }
 ```
-
----
 
 ## Limitations
 
