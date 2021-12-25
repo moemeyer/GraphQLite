@@ -1,5 +1,5 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.5.1 (swiftlang-1300.0.31.4 clang-1300.0.29.6)
+// swift-compiler-version: Apple Swift version 5.5.2 (swiftlang-1300.0.47.5 clang-1300.0.29.30)
 // swift-module-flags: -target arm64-apple-ios13.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name GraphQLite
 import CryptoKit
 import Foundation
@@ -212,6 +212,7 @@ extension GraphQLite.GQLDate {
 }
 @objc public protocol GQLObject {
   @objc static func primaryKey() -> Swift.String
+  @objc optional static func encryptedColumns() -> [Swift.String]
 }
 extension GraphQLite.GQLObject {
   public static func table() -> Swift.String
@@ -340,6 +341,11 @@ public enum GQLDebugLevel {
 }
 @objc @_inheritsConvenienceInitializers public class GQLDebug : ObjectiveC.NSObject {
   public class func level(_ debugLevel: GraphQLite.GQLDebugLevel)
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers public class GQLCryptor : ObjectiveC.NSObject {
+  public class func password(_ value: Swift.String)
   @objc override dynamic public init()
   @objc deinit
 }

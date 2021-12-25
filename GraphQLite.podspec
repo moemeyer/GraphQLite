@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'GraphQLite'
-  s.version = '1.1.9'
+  s.version = '1.2.0'
   s.license = { :type => 'Copyright', :file => 'LICENSE' }
 
   s.summary = 'GraphQLite is a toolkit to work with GraphQL servers easily.'
