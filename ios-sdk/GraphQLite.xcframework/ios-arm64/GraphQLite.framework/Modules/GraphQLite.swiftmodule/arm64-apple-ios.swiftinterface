@@ -101,7 +101,7 @@ public enum GQLObserverType {
   }
 }
 public typealias GQLObserverCallback = (Swift.String, Any) -> Swift.Void
-@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class GQLDatabase : ObjectiveC.NSObject {
+@objc @_inheritsConvenienceInitializers public class GQLDatabase : ObjectiveC.NSObject {
   @objc override dynamic public init()
   public init(file: Swift.String)
   public init(path: Swift.String)
